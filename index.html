@@ -15,10 +15,10 @@
     <script type="text/javascript" src="./css/functions.js" charset="utf-8"></script>
     <script type="text/javascript" src="./css/love.js" charset="utf-8"></script>
     <style type="text/css">
-        <!--
-        .STYLE1 {
+        <!-- .STYLE1 {
             color: #666666
         }
+        
         -->
     </style>
 </head>
@@ -49,12 +49,13 @@
                 </div>
             </div>
             <div id="clock-box">
-                <!-- <span class="STYLE1"></span><font color="#33CC00">距离我们在一起，</font>
-<span class="STYLE1">已经是……</span> -->
+                <span class="STYLE1"></span>
+                <font color="#33CC00">距离我们在一起，</font>
+                <span class="STYLE1">已经是……</span>
                 <span class="STYLE1"></span>
                 <font color="#33CC00"></font>
                 <span class="STYLE1"></span>
-                <!-- <div id="clock"></div> -->
+                <div id="clock"></div>
             </div>
             <canvas id="canvas" width="1100" height="680"></canvas>
         </div>
@@ -65,7 +66,7 @@
     </script>
 
     <script>
-        (function () {
+        (function() {
             var canvas = $('#canvas');
 
             if (!canvas[0].getContext) {
@@ -118,8 +119,9 @@
             var foot = tree.footer;
             var hold = 1;
 
-            canvas.click(function (e) {
-                var offset = canvas.offset(), x, y;
+            canvas.click(function(e) {
+                var offset = canvas.offset(),
+                    x, y;
                 x = e.pageX - offset.left;
                 y = e.pageY - offset.top;
                 if (seed.hover(x, y)) {
@@ -128,14 +130,15 @@
                     canvas.unbind("mousemove");
                     canvas.removeClass('hand');
                 }
-            }).mousemove(function (e) {
-                var offset = canvas.offset(), x, y;
+            }).mousemove(function(e) {
+                var offset = canvas.offset(),
+                    x, y;
                 x = e.pageX - offset.left;
                 y = e.pageY - offset.top;
                 canvas.toggleClass('hand', seed.hover(x, y));
             });
 
-            var seedAnimate = eval(Jscex.compile("async", function () {
+            var seedAnimate = eval(Jscex.compile("async", function() {
                 seed.draw();
                 while (hold) {
                     $await(Jscex.Async.sleep(10));
@@ -151,21 +154,21 @@
                 }
             }));
 
-            var growAnimate = eval(Jscex.compile("async", function () {
+            var growAnimate = eval(Jscex.compile("async", function() {
                 do {
                     tree.grow();
                     $await(Jscex.Async.sleep(10));
                 } while (tree.canGrow());
             }));
 
-            var flowAnimate = eval(Jscex.compile("async", function () {
+            var flowAnimate = eval(Jscex.compile("async", function() {
                 do {
                     tree.flower(2);
                     $await(Jscex.Async.sleep(10));
                 } while (tree.canFlower());
             }));
 
-            var moveAnimate = eval(Jscex.compile("async", function () {
+            var moveAnimate = eval(Jscex.compile("async", function() {
                 tree.snapshot("p1", 240, 0, 610, 680);
                 while (tree.move("p1", 500, 0)) {
                     foot.draw();
@@ -174,14 +177,14 @@
                 foot.draw();
                 tree.snapshot("p2", 500, 0, 610, 680);
 
-                // 会有闪烁不得意这样做, (＞﹏＜)
+                /* // 会有闪烁不得意这样做, (＞﹏＜) */
                 canvas.parent().css("background", "url(" + tree.toDataURL('image/png') + ")");
                 canvas.css("background", "#ffe");
                 $await(Jscex.Async.sleep(300));
                 canvas.css("background", "none");
             }));
 
-            var jumpAnimate = eval(Jscex.compile("async", function () {
+            var jumpAnimate = eval(Jscex.compile("async", function() {
                 var ctx = tree.ctx;
                 while (true) {
                     tree.ctx.clearRect(0, 0, width, height);
@@ -191,13 +194,13 @@
                 }
             }));
 
-            var textAnimate = eval(Jscex.compile("async", function () {
+            var textAnimate = eval(Jscex.compile("async", function() {
                 var together = new Date();
-                together.setFullYear(2021, 1, 22);      //时间年月日
-                together.setHours(16);            //小时  
-                together.setMinutes(53);          //分钟
-                together.setSeconds(0);         //秒前一位
-                together.setMilliseconds(2);        //秒第二位
+                together.setFullYear(2021, 1, 22); //时间年月日
+                together.setHours(16); //小时  
+                together.setMinutes(53); //分钟
+                together.setSeconds(0); //秒前一位
+                together.setMilliseconds(2); //秒第二位
 
                 $("#code").show().typewriter();
                 $("#clock-box").fadeIn(500);
@@ -207,7 +210,7 @@
                 }
             }));
 
-            var runAsync = eval(Jscex.compile("async", function () {
+            var runAsync = eval(Jscex.compile("async", function() {
                 $await(seedAnimate());
                 $await(growAnimate());
                 $await(flowAnimate());
